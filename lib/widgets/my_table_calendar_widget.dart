@@ -1,3 +1,5 @@
+import 'package:hijri/hijri_calendar.dart';
+
 import '../models/day_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -42,36 +44,51 @@ class MyTableCalendarWidget extends StatelessWidget {
       calendarBuilders: CalendarBuilders(
         prioritizedBuilder: (context, day, focusedDay) {
           var status = getStatusSvg(_events[day]);
-          return Padding(
-            padding: const EdgeInsets.all(1),
-            child: ColoredBox(
+          return Container(
+            margin: const EdgeInsets.all(1),
+            decoration: BoxDecoration(
               color: _events[day] == DayStatus.bad
                   ? Color(0xFFFF699C)
                   : Colors.transparent,
-              child: Padding(
-                padding: const EdgeInsets.all(2.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          day.day.toString(),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: _events[day] == DayStatus.bad
-                                ? Colors.white
-                                : null,
-                            fontWeight: DateTime.now().month == day.month
-                                ? FontWeight.w500
-                                : FontWeight.w300,
-                          ),
+              border: Border(
+                left: BorderSide(width: 0.5),
+                bottom: BorderSide(width: 0.5),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        day.day.toString(),
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: _events[day] == DayStatus.bad
+                              ? Colors.white
+                              : null,
+                          fontWeight: DateTime.now().month == day.month
+                              ? FontWeight.w500
+                              : FontWeight.w300,
                         ),
-                      ],
-                    ),
-                    status != "" ? SvgPicture.asset(status) : SizedBox()
-                  ],
-                ),
+                      ),
+                      Text(
+                        HijriCalendar.fromDate(day).hDay.toString(),
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: _events[day] == DayStatus.bad
+                              ? Colors.white
+                              : null,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ],
+                  ),
+                  status != "" ? SvgPicture.asset(status) : SizedBox()
+                ],
               ),
             ),
           );

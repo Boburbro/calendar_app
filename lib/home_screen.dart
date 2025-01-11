@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         children: [
           MyTableCalendarWidget(),
-          Divider(),
+          // Divider(),
           Padding(
             padding: const EdgeInsets.all(18.0),
             child: Column(
